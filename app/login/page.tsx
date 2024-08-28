@@ -8,13 +8,8 @@ import { FormProps } from "antd";
 import bgImage from "../../public/SVG-background.gif";
 
 export default function Login() {
-  const loginState = {
-    email: "",
-    password: "",
-  };
-
   type FieldType = {
-    username?: string;
+    email?: string;
     password?: string;
     remember?: string;
   };
