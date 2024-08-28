@@ -8,8 +8,6 @@ import { FormProps } from "antd";
 import bgImage from "../../public/SVG-background.gif";
 
 export default function Login() {
-  const [showPassword, setShowPassword] = React.useState<boolean>(false);
-
   const loginState = {
     email: "",
     password: "",
@@ -86,9 +84,6 @@ export default function Login() {
     }
   };
 
-  const handleTogglePassword = () =>
-    setShowPassword((showPassword) => !showPassword);
-
   function handleTaskChange(e) {
     onChange(e.target.value);
   }
@@ -113,11 +108,9 @@ export default function Login() {
             autoComplete="off"
           >
             <Form.Item<FieldType>
-              label="Username"
-              name="username"
-              rules={[
-                { required: true, message: "Please input your username!" },
-              ]}
+              label="Email"
+              name="email"
+              rules={[{ required: true, message: "Please input your email!" }]}
             >
               <Input />
             </Form.Item>
