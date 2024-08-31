@@ -2,12 +2,14 @@
 import Image from "next/image";
 import React from "react";
 import * as yup from "yup";
-import { Input, Button, Card, Avatar, Form, Checkbox } from "antd";
+import { Input, Card, Avatar, Form, Checkbox, Button } from "antd";
 import { LockOutlined } from "@ant-design/icons";
 import { FormProps } from "antd";
 import bgImage from "../../public/SVG-background.gif";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
+  const router = useRouter();
   type FieldType = {
     email?: string;
     password?: string;
@@ -84,7 +86,7 @@ export default function Login() {
   }
 
   return (
-    <main className="flex  min-h-screen flex-col items-center justify-between p-24">
+    <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="relative bg-white mt-5 border-2 border-slate-100 rounded-lg h-full">
         <div className="flex justify-center p-5">
           <Avatar className="m-2 bg-fuchsia-700  content-center flex">
@@ -127,12 +129,13 @@ export default function Login() {
             </Form.Item>
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
               <Button
-                onClick={() => alert("giris")}
+                onClick={() => router.push("/dashboard")}
                 type="primary"
                 htmlType="submit"
               >
                 Login
               </Button>
+              {/* <Button>Login</Button> */}
             </Form.Item>
           </Form>
         </div>
