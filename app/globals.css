@@ -26,6 +26,21 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+::-webkit-scrollbar-thumb {
+  background: rgba(9, 128, 175, 0.2);
+  border: 4px solid #fff;
+  border-radius: 50px;
+}
+
+::-webkit-scrollbar {
+  height: 12px;
+  width: 16px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #020c44;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
