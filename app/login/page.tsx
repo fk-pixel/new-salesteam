@@ -1,19 +1,29 @@
 "use client";
 import Image from "next/image";
 import React from "react";
-import * as yup from "yup";
-import { Input, Card, Avatar, Form, Checkbox, Button } from "antd";
-import { LockOutlined } from "@ant-design/icons";
+import {
+  Input,
+  Card,
+  Avatar,
+  Form,
+  Checkbox,
+  Button,
+  ConfigProvider,
+} from "antd";
+import { AppleOutlined, GoogleOutlined, LockOutlined } from "@ant-design/icons";
 import { FormProps } from "antd";
-import bgImage from "../../public/SVG-background.gif";
 import { useRouter } from "next/navigation";
 
+import SessionLayout from "../../../layouts/SessionLayout";
+
 export default function Login() {
+  const [imageUrl, setImageUrl] = React.useState<string>("");
+
   const router = useRouter();
+
   type FieldType = {
     email?: string;
     password?: string;
-    remember?: string;
   };
 
   const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
@@ -26,132 +36,118 @@ export default function Login() {
     console.log("Failed:", errorInfo);
   };
 
-  const validationSchema = yup.object().shape({
-    email: yup
-      .string()
-      .email("Gecersiz mail girdiniz")
-      .required("Mail adresinizi giriniz"),
-    password: yup
-      .string()
-      .test(
-        "len",
-        "Parola karakter limitini astiniz",
-        (val) => val.length <= 12
-      )
-      .test("len", "Parola 8 karakterden az olamaz", (val) => val.length >= 8)
-      .required("Gecerli parolanizi giriniz"),
-  });
-
-  const onSubmit = async (values) => {
-    const user =
-      users !== null ? users.find((x) => x.email === values.email) : {};
-
-    const matchedUser =
-      user !== undefined &&
-      user.email === values.email &&
-      user.password === values.password;
-
-    if (matchedUser) {
-      toast("Basariyla giris yaptiniz. Ana sayfaya yönlendiriliyorsunuz", {
-        type: "success",
-      });
-      router.push("/dashboard");
-
-      localStorage.setItem(
-        "userData",
-        JSON.stringify({
-          id: user._id,
-        })
-      );
-    }
-
-    if (!matchedUser) {
-      if (!user) {
-        toast(`'${values.email}' kullanici kayitli degil.`, {
-          type: "error",
-        });
-      } else {
-        toast(
-          `'${values.email}' kullaniciya ait bilgiler eksik veya gecersizdir.`,
-          {
-            type: "error",
-          }
-        );
-      }
-    }
+  const handleGoogleLogin = () => {
+    // Implement Google login logic here
+    console.log("Initiate login with Google");
   };
 
-  function handleTaskChange(e) {
-    onChange(e.target.value);
-  }
+  const handleAppleLogin = () => {
+    // Implement Apple login logic here
+    console.log("Initiate login with Apple");
+  };
+
+  React.useEffect(() => {
+    // Function to fetch a random image URL
+    const fetchRandomImage = async () => {
+      try {
+        // Using Lorem Picsum to get a random image
+        const response = await fetch("https://picsum.photos/1200/800");
+        if (response.ok) {
+          setImageUrl(response.url);
+        }
+      } catch (error) {
+        console.error("Error fetching image:", error);
+      }
+    };
+
+    fetchRandomImage();
+
+    const intervalId = setInterval(fetchRandomImage, 7000);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="relative bg-white mt-5 border-2 border-slate-100 rounded-lg h-full">
-        <div className="flex justify-center p-5">
-          <Avatar className="m-2 bg-fuchsia-700  content-center flex">
-            <LockOutlined />
-          </Avatar>
-        </div>
-        <div className="p-5">
-          <Form
-            name="basic"
-            labelCol={{ span: 8 }}
-            wrapperCol={{ span: 16 }}
-            style={{ maxWidth: 600 }}
-            initialValues={{ remember: true }}
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
-            autoComplete="off"
-          >
-            <Form.Item<FieldType>
-              label="Email"
-              name="email"
-              rules={[{ required: true, message: "Please input your email!" }]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item<FieldType>
-              label="Password"
-              name="password"
-              rules={[
-                { required: true, message: "Please input your password!" },
-              ]}
-            >
-              <Input.Password />
-            </Form.Item>
-            <Form.Item<FieldType>
-              name="remember"
-              valuePropName="checked"
-              wrapperCol={{ offset: 8, span: 16 }}
-            >
-              <Checkbox>Remember me</Checkbox>
-            </Form.Item>
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-              <Button
-                onClick={() => router.push("/dashboard")}
-                type="primary"
-                htmlType="submit"
-              >
-                Login
-              </Button>
-              {/* <Button>Login</Button> */}
-            </Form.Item>
-          </Form>
-        </div>
+    <>
+      <div className="flex h-screen">
+        {/* Image section */}
         <div
+          className="w-3/4 bg-cover bg-center"
           style={{
-            backgroundImage: `url(${bgImage.src})`,
-            backgroundSize: "cover",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center center",
-            //width: "50%",
-            height: "2rem",
-            //position: "absolute",
-            //marginTop: "12rem",
+            backgroundImage: `url(${imageUrl})`,
+            filter: "sepia(1)",
           }}
         ></div>
+
+        {/* Login form section */}
+        <div className="flex justify-center items-center w-1/4 bg-[#FFFFF0]">
+          <div className="w-3/4">
+            <img
+              src="/sales_team_hand.png"
+              alt="Sales Team Logo"
+              className="flex justify-self-center items-center w-20 h-20"
+            />
+            <h2 className="flex justify-self-center text-2xl font-bold mb-4">
+              Login
+            </h2>
+            <Form
+              name="login"
+              initialValues={{ remember: true }}
+              onFinish={onFinish}
+              onFinishFailed={onFinishFailed}
+            >
+              <Form.Item
+                name="username"
+                rules={[
+                  { required: true, message: "Please input your username!" },
+                ]}
+              >
+                <Input placeholder="Username" />
+              </Form.Item>
+
+              <Form.Item
+                name="password"
+                rules={[
+                  { required: true, message: "Please input your password!" },
+                ]}
+              >
+                <Input.Password placeholder="Password" />
+              </Form.Item>
+
+              <Form.Item>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  onClick={() => router.push("/dashboard")}
+                  className="w-full"
+                >
+                  Login
+                </Button>
+              </Form.Item>
+            </Form>
+
+            <div className="flex flex-col space-y-2 mt-4">
+              <Button
+                icon={<GoogleOutlined />}
+                onClick={handleGoogleLogin}
+                className="flex items-center justify-center w-full"
+              >
+                Continue with Google
+              </Button>
+              <Button
+                icon={<AppleOutlined />}
+                onClick={handleAppleLogin}
+                className="flex items-center justify-center w-full"
+              >
+                Continue with Apple
+              </Button>
+            </div>
+            <div className="text-center mt-4">
+              <a href="/register">Don't have an account? Register</a>
+            </div>
+          </div>
+        </div>
       </div>
-    </main>
+    </>
   );
 }
