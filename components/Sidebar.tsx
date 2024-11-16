@@ -20,7 +20,7 @@ const Sidebar = ({ collapsed }) => {
         theme="light"
         mode="inline"
         defaultSelectedKeys={[1]}
-        className="text-base font-normal text-black bg-slate-300"
+        className="text-base font-normal text-black bg-gray-50"
       >
         <Menu.Item key="1">
           <Link href="/dashboard">
