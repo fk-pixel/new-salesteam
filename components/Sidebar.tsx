@@ -21,18 +21,23 @@ const Sidebar = ({ collapsed }) => {
         mode="inline"
         defaultSelectedKeys={[1]}
         className="text-base font-normal text-black bg-gray-50"
-      >
-        <Menu.Item key="1">
-          <Link href="/dashboard">
-            {collapsed ? <AppstoreOutlined /> : <span>Dashboard</span>}
-          </Link>
-        </Menu.Item>
-        <Menu.Item key="2">
-          <Link href="/order">
-            {collapsed ? <FormOutlined /> : <span>Order</span>}
-          </Link>
-        </Menu.Item>
-      </Menu>
+        items={[
+          {
+            key: "1",
+            icon: <AppstoreOutlined />,
+            label: "Dashboard",
+            onClick: () => {
+              window.location.assign("/dashboard");
+            },
+          },
+          {
+            key: "2",
+            icon: <FormOutlined />,
+            label: "Order",
+            onClick: () => window.location.assign("/order"),
+          },
+        ]}
+      ></Menu>
     </div>
   );
 };
