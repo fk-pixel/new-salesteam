@@ -26,9 +26,7 @@ const Sidebar = ({ collapsed }) => {
             key: "1",
             icon: <AppstoreOutlined />,
             label: "Dashboard",
-            onClick: () => {
-              window.location.assign("/dashboard");
-            },
+            onClick: () => window.location.assign("/dashboard"),
           },
           {
             key: "2",
