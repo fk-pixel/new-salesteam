@@ -2,10 +2,10 @@
 import React from "react";
 import { redirect } from "next/navigation";
 
-export default function Home() {
+export default function HomePage() {
   React.useEffect(() => {
-    redirect("/login");
+    void redirect("/login");
   }, []);
 
-  return <></>;
+  return null;
 }
