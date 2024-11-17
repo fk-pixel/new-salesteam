@@ -8,6 +8,7 @@ import {
   DatePicker,
   Upload,
   AutoComplete,
+  notification,
 } from "antd";
 import {
   DeleteOutlined,
@@ -77,6 +78,18 @@ const OrderForm = () => {
   const productLimit = 20;
   const giftLimit = 5;
 
+  const openNotification = (message) => {
+    notification.open({
+      message: "Notification",
+      showProgress: true,
+      placement: "bottomRight",
+      description: message,
+      onClick: () => {
+        console.log("Notification Clicked!");
+      },
+    });
+  };
+
   const addProductItem = () => {
     if (products.length >= productLimit) return;
 
@@ -95,6 +108,7 @@ const OrderForm = () => {
     };
 
     setProducts([...products, newProduct]);
+    openNotification("New product added successfully!");
   };
 
   const addGiftItem = () => {
@@ -115,14 +129,17 @@ const OrderForm = () => {
     };
 
     setGifts([...gifts, newGift]);
+    openNotification("New gift added successfully!");
   };
 
   const removeProduct = (index) => {
     setProducts(products.filter((_, i) => i !== index));
+    openNotification("This product removed successfully!");
   };
 
   const removeGift = (index) => {
     setGifts(gifts.filter((_, i) => i !== index));
+    openNotification("This gift removed successfully!");
   };
 
   const updateProduct = (index, field, value) => {
