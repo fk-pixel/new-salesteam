@@ -130,14 +130,14 @@ export default function Login() {
               <Button
                 icon={<GoogleOutlined />}
                 onClick={handleGoogleLogin}
-                className="flex items-center justify-center w-full"
+                className="flex items-center bg-[#DB4437] text-white justify-center w-full"
               >
                 Continue with Google
               </Button>
               <Button
                 icon={<AppleOutlined />}
                 onClick={handleAppleLogin}
-                className="flex items-center justify-center w-full"
+                className="flex items-center bg-[#0D0D0D] text-white justify-center w-full "
               >
                 Continue with Apple
               </Button>
