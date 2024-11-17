@@ -35,7 +35,7 @@ const Sidebar = ({ collapsed }) => {
             onClick: () => window.location.assign("/order"),
           },
         ]}
-      ></Menu>
+      />
     </div>
   );
 };
