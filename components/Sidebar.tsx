@@ -12,7 +12,7 @@ import imgLogo from "../public/T.png";
 
 const Sidebar = ({ collapsed }) => {
   return (
-    <div className="">
+    <div>
       <div className="flex flex-col justify-center items-center">
         <Image src={imgLogo} width={200} height={200} />
       </div>
