@@ -24,10 +24,6 @@ const Main = ({ children }) => {
     }
   }, []);
 
-  
-  
-
-  
   return (
     <Layout className="h-screen w-full flex flex-row">
       {/* SIDEBAR */}
@@ -73,7 +69,7 @@ const Main = ({ children }) => {
             </div>
             <div className="flex justify-end p-4">
               <SignedIn>
-              
+
                 <UserButton showName/>
               </SignedIn>
             </div>
@@ -81,7 +77,7 @@ const Main = ({ children }) => {
         </Header>
 
         {/* CONTENT */}
-        <Content className="h-full bg-white min-h-[280]">{children}</Content>
+        <Content className="h-full overflow-scroll bg-white min-h-[280]">{children}</Content>
 
         {/* FOOTER */}
         <Footer className="text-center pt-0">
