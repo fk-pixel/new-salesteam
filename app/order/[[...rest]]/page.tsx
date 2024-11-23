@@ -13,6 +13,7 @@ import {
 import {
   DeleteOutlined,
   GiftOutlined,
+  PlusCircleOutlined,
   UploadOutlined,
 } from "@ant-design/icons";
 
@@ -157,16 +158,20 @@ const OrderForm = () => {
   };
 
   return (
-    <div className="p-4">
-      <div className="flex justify-between mb-6">
-        <Button onClick={addProductItem} type="primary" className="w-96">
+    <div className="p-4 overflow-scroll h-max-90dvh">
+      <div className="sticky z-50 flex justify-center items-center bg-white p-4">
+        <Button
+        icon={<PlusCircleOutlined className="h-6 w-6 mr-2 transform transition-transform duration-300 ease-in-out group-hover:rotate-90" />}
+        onClick={addProductItem}
+        type="primary"
+        className="w-72 h-24 bg-blue-500 text-white text-lg rounded-md shadow-md flex items-center justify-center transition-all duration-300 ease-in-out hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300">
           Add Product
         </Button>
         <Button
-          icon={<GiftOutlined />}
+          icon={<GiftOutlined className="h-6 w-6 mr-2 transform transition-transform duration-300 ease-in-out group-hover:rotate-90" />}
           onClick={addGiftItem}
           type="default"
-          className="w-96"
+          className="w-72 h-24 text-lg rounded-md shadow-md flex items-center justify-center transition-all duration-300 ease-in-out hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300"
         >
           Add Gift
         </Button>
