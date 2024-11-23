@@ -6,6 +6,7 @@ import { FormOutlined, HomeOutlined } from "@ant-design/icons";
 import Main from "@/layouts/Main";
 import { useUser } from "@clerk/nextjs";
 import SignInPage from "@/app/sign-in/[[...sign-in]]/page";
+import SignUpPage from "@/app/sign-up/[[...sign-up]]/page";
 
 export default function Portal({ children }) {
   const pathname = usePathname();
@@ -21,8 +22,10 @@ export default function Portal({ children }) {
         </main>
     )
       :
-    (
+    ( pathname === "/sign-in" ? (
       <SignInPage />
+    )
+    : (<SignUpPage />)
     )
     }
     </>
