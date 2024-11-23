@@ -15,36 +15,13 @@ import { FormProps } from "antd";
 import { useRouter } from "next/navigation";
 
 import SessionLayout from "../../../layouts/SessionLayout";
+import { SignIn, SignInButton } from "@clerk/nextjs";
+import Link from "next/link";
 
-export default function Login() {
+export default function SignInPage() {
   const [imageUrl, setImageUrl] = React.useState<string>("");
 
   const router = useRouter();
-
-  type FieldType = {
-    email?: string;
-    password?: string;
-  };
-
-  const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
-    console.log("Success:", values);
-  };
-
-  const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (
-    errorInfo
-  ) => {
-    console.log("Failed:", errorInfo);
-  };
-
-  const handleGoogleLogin = () => {
-    // Implement Google login logic here
-    console.log("Initiate login with Google");
-  };
-
-  const handleAppleLogin = () => {
-    // Implement Apple login logic here
-    console.log("Initiate login with Apple");
-  };
 
   React.useEffect(() => {
     // Function to fetch a random image URL
@@ -72,25 +49,34 @@ export default function Login() {
       <div className="flex h-screen">
         {/* Image section */}
         <div
-          className="w-3/4 bg-cover bg-center"
+          className="w-4/6 bg-cover bg-center"
           style={{
             backgroundImage: `url(${imageUrl})`,
             filter: "sepia(1)",
           }}
-        ></div>
+        />
 
         {/* Login form section */}
-        <div className="flex justify-center items-center w-1/4 bg-[#FFFFF0]">
-          <div className="w-3/4">
-            <img
+        <div className="h-screen content-center self-center items-center w-2/6 bg-[#FFFFF0]">
+        {/* <div className="h-full block justify-center content-center items-center"> */}
+          <img
               src="/sales_team_hand.png"
               alt="Sales Team Logo"
               className="flex justify-self-center items-center w-20 h-20"
             />
-            <h2 className="flex justify-self-center text-2xl font-bold mb-4">
+            <div className="flex justify-center items-center">
+            <SignIn>
+              <Link href="/sign-up">
+              {/* Don't have an account? Register */}
+</Link>
+              {/* <a href="/sign-in"></a> */}
+              </SignIn>
+
+            </div>
+            {/* <h2 className="flex justify-self-center text-2xl font-bold mb-4">
               Login
-            </h2>
-            <Form
+            </h2> */}
+            {/* <Form
               name="login"
               initialValues={{ remember: true }}
               onFinish={onFinish}
@@ -141,13 +127,14 @@ export default function Login() {
               >
                 Continue with Apple
               </Button>
-            </div>
-            <div className="text-center mt-4">
-              <a href="/register">Don't have an account? Register</a>
-            </div>
+            </div> */}
+            {/* <div className="text-center mt-4"> */}
+            {/* </div> */}
           </div>
+        {/* </div> */}
+
+
         </div>
-      </div>
     </>
   );
 }

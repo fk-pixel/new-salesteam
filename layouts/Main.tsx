@@ -11,6 +11,7 @@ import Sider from "antd/es/layout/Sider";
 import { useRouter } from "next/navigation";
 
 import Sidebar from "../components/Sidebar";
+import { SignedIn, UserButton } from "@clerk/nextjs";
 
 const Main = ({ children }) => {
   const router = useRouter();
@@ -23,29 +24,10 @@ const Main = ({ children }) => {
     }
   }, []);
 
-  // Navigation Menu Options
-  const items = [
-    {
-      label: "Logout",
-      key: "1",
-      icon: <PoweroffOutlined />,
-    },
-  ];
+  
+  
 
-  const handleMenuClick = (e) => {
-    if (e.key === "1") {
-      //Logout
-      openSuccessNotification("Logged Out!", "Logout Success!");
-      localStorage.clear();
-      window.location.replace("/login");
-    }
-  };
-
-  const menuProps = {
-    items,
-    onClick: handleMenuClick,
-  };
-
+  
   return (
     <Layout className="h-screen w-full flex flex-row">
       {/* SIDEBAR */}
@@ -89,10 +71,11 @@ const Main = ({ children }) => {
                 }}
               />
             </div>
-            <div className="flex justify-end">
-              <Dropdown.Button menu={menuProps} icon={<UserOutlined />}>
-                Hello, User!
-              </Dropdown.Button>
+            <div className="flex justify-end p-4">
+              <SignedIn>
+              
+                <UserButton showName/>
+              </SignedIn>
             </div>
           </div>
         </Header>
@@ -101,7 +84,6 @@ const Main = ({ children }) => {
         <Content className="h-full bg-white min-h-[280]">{children}</Content>
 
         {/* FOOTER */}
-        {/* <FooterNav /> */}
         <Footer className="text-center pt-0">
           Copyright 2024 © ALL RIGHTS RESERVED. Design by{" "}
           <a href="" target="_blank" rel="noreferrer">
