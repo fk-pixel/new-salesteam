@@ -16,6 +16,7 @@ import {
   PlusCircleOutlined,
   UploadOutlined,
 } from "@ant-design/icons";
+import TextArea from "antd/es/input/TextArea";
 
 interface OrderItemProps {
   id: string;
@@ -45,6 +46,12 @@ interface OrderFormProps {
   created_by: string;
 }
 
+interface OpenNotificationProps {
+  type: 'error' | 'success' | 'info' | 'warning';
+  description: string;
+  onClick: () => void;
+}
+
 const MAINTYPE_OPTIONS = [
   { value: "panel", label: "Panel" },
   { value: "roll", label: "Roll" },
@@ -72,24 +79,25 @@ export const CARGOTYPE_OPTIONS = [
   { value: "fiveBalancedPanels", label: "Five Balanced Panels" },
 ];
 
+const openNotification = (description, type) : OpenNotificationProps => {
+  notification.open({
+    message: type === "error" ? "Error" : "Notification",
+    type,
+    showProgress: true,
+    placement: "bottomRight",
+    description,
+    onClick: () => {},
+  });
+};
+
 const OrderForm = () => {
   const [products, setProducts] = React.useState<OrderItemProps[]>([]);
   const [gifts, setGifts] = React.useState<OrderItemProps[]>([]);
+  const [openCompleteOrder, setOpenCompleteOrder] = React.useState(false);
 
   const productLimit = 20;
   const giftLimit = 5;
 
-  const openNotification = (message) => {
-    notification.open({
-      message: "Notification",
-      showProgress: true,
-      placement: "bottomRight",
-      description: message,
-      onClick: () => {
-        console.log("Notification Clicked!");
-      },
-    });
-  };
 
   const addProductItem = () => {
     if (products.length >= productLimit) return;
@@ -109,11 +117,15 @@ const OrderForm = () => {
     };
 
     setProducts([...products, newProduct]);
-    openNotification("New product added successfully!");
+    openNotification("New product added successfully!","success",);
   };
 
   const addGiftItem = () => {
-    if (gifts.length >= giftLimit) return;
+    if (gifts.length >= giftLimit) {
+
+      openNotification("No more gift can be added. Limit is 5!", "error");
+      return
+    }
 
     const newGift = {
       id: crypto.randomUUID(),
@@ -130,17 +142,17 @@ const OrderForm = () => {
     };
 
     setGifts([...gifts, newGift]);
-    openNotification("New gift added successfully!");
+    openNotification("New gift added successfully!", "success");
   };
 
   const removeProduct = (index) => {
     setProducts(products.filter((_, i) => i !== index));
-    openNotification("This product removed successfully!");
+    openNotification("This product removed successfully!", "success");
   };
 
   const removeGift = (index) => {
     setGifts(gifts.filter((_, i) => i !== index));
-    openNotification("This gift removed successfully!");
+    openNotification("This gift removed successfully!", "success");
   };
 
   const updateProduct = (index, field, value) => {
@@ -157,14 +169,17 @@ const OrderForm = () => {
     );
   };
 
+  const showOrderCard = products.length > 0 || gifts.length > 0
+
   return (
     <div className="p-4 overflow-scroll h-max-90dvh">
+      {/* Add Buttons Group */}
       <div className="sticky z-50 flex justify-center items-center bg-white p-4">
         <Button
         icon={<PlusCircleOutlined className="h-6 w-6 mr-2 transform transition-transform duration-300 ease-in-out group-hover:rotate-90" />}
         onClick={addProductItem}
-        type="primary"
-        className="w-72 h-24 bg-blue-500 text-white text-lg rounded-md shadow-md flex items-center justify-center transition-all duration-300 ease-in-out hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300">
+        type="default"
+        className="w-72 h-24 text-lg rounded-md shadow-md flex items-center justify-center transition-all duration-300 ease-in-out hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300">
           Add Product
         </Button>
         <Button
@@ -176,7 +191,7 @@ const OrderForm = () => {
           Add Gift
         </Button>
       </div>
-
+      {/* Product - Gif Cards */}
       <div className="flex justify-between space-x-4">
         <div className="space-y-4 w-full">
           {products.map((product, index) => (
@@ -393,6 +408,38 @@ const OrderForm = () => {
           ))}
         </div>
       </div>
+      {/* Order Card */}
+      {showOrderCard ? (
+      <div className={`fixed bottom-10 right-0 w-full bg-sky-950/75 shadow-lg z-1000 bottom-${openCompleteOrder ? 20 : 20} h-${openCompleteOrder ? ['48rem'] : '16'} z-1000 shadow-lg`}>
+<div className="my-8 mx-4">
+
+        <Button
+        type="link"
+        className={`h-30 text-zinc-300 text-xl pl-16 pb-${openCompleteOrder ? 0 : 0} pt-${openCompleteOrder ? 0 : 12} w-full flex justify-end`}
+        onClick={()=>setOpenCompleteOrder(!openCompleteOrder)}>{openCompleteOrder ? "⇣ Close" : "⇡ Complete Order"}
+        </Button>
+          </div>
+        {openCompleteOrder && (
+          <div className="block space-y-4 p-4">
+
+                <TextArea placeholder="Description" className="mb-2 w-full" rows={4} />
+        <Upload
+                beforeUpload={() => false}
+                className="mb-2 w-full"
+                >
+                <Button icon={<UploadOutlined  className="w-full"/>}>Upload Cargo Label</Button>
+              </Upload>
+              <div className="flex justify-end">
+
+       <div className="flex justify-end">
+        <Button type="primary" className="w-72 h-24">Submit</Button>
+        </div>
+              </div>
+        </div>
+        )}
+      </div>
+
+      ) : <div></div>}
     </div>
   );
 };
