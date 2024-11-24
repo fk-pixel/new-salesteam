@@ -107,12 +107,12 @@ const OrderForm = () => {
       itemType: "product",
       itemName: "",
       itemFile: null,
-      itemWidth: 0,
-      itemHeight: 0,
-      itemCount: 0,
+      itemWidth: null,
+      itemHeight: null,
+      itemCount: null,
       itemSubType: "",
       itemCargoType: "",
-      itemPrice: 0,
+      itemPrice: null,
       itemMainType: "",
     };
 
@@ -253,6 +253,7 @@ const OrderForm = () => {
                       .toLowerCase()
                       .includes(inputValue.toLowerCase())
                   }
+                  optionRender={(option) => option.label}
                 />
                 <AutoComplete
                   options={
@@ -271,6 +272,7 @@ const OrderForm = () => {
                       .toLowerCase()
                       .includes(inputValue.toLowerCase())
                   }
+                  optionRender={(option) => option.label}
                 />
                 <AutoComplete
                   options={CARGOTYPE_OPTIONS}
@@ -285,6 +287,8 @@ const OrderForm = () => {
                       .toLowerCase()
                       .includes(inputValue.toLowerCase())
                   }
+                  optionRender={(option) => option.label}
+
                 />
               </div>
               <Upload
