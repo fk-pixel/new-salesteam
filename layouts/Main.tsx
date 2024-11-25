@@ -4,8 +4,9 @@ import {
   MenuUnfoldOutlined,
   UserOutlined,
   PoweroffOutlined,
+  BellOutlined,
 } from "@ant-design/icons";
-import { Layout, Button, Dropdown } from "antd";
+import { Layout, Button, Dropdown, Badge } from "antd";
 import { Content, Header, Footer } from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
 import { useRouter } from "next/navigation";
@@ -67,9 +68,11 @@ const Main = ({ children }) => {
                 }}
               />
             </div>
-            <div className="flex justify-end p-4">
+            <div className="flex content-center justify-end p-4">
+            <Badge count={5} size="small">
+              <BellOutlined className="text-2xl" onClick={() => router.push("/messages")} />
+            </Badge>
               <SignedIn>
-
                 <UserButton showName/>
               </SignedIn>
             </div>
