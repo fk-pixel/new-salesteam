@@ -172,7 +172,7 @@ const OrderForm = () => {
   const showOrderCard = products.length > 0 || gifts.length > 0
 
   return (
-    <div className="p-4 overflow-scroll h-max-90dvh">
+    <div className="p-1 overflow-scroll h-max-90dvh">
       {/* Add Buttons Group */}
       <div className="sticky z-50 flex justify-center items-center bg-white p-4">
         <Button
@@ -414,12 +414,12 @@ const OrderForm = () => {
       </div>
       {/* Order Card */}
       {showOrderCard ? (
-      <div className={`fixed bottom-10 right-0 w-full bg-sky-950/75 shadow-lg z-1000 bottom-${openCompleteOrder ? 20 : 20} h-${openCompleteOrder ? ['48rem'] : '16'} z-1000 shadow-lg`}>
+      <div className={`fixed bottom-0 right-0 w-full bg-sky-950 shadow-lg z-1000 h-${openCompleteOrder ? ['48rem'] : '16'} z-1000 shadow-lg`}>
 <div className="my-8 mx-4">
 
         <Button
         type="link"
-        className={`h-30 text-zinc-300 text-xl pl-16 pb-${openCompleteOrder ? 0 : 0} pt-${openCompleteOrder ? 0 : 12} w-full flex justify-end`}
+        className={`h-30 text-zinc-300 text-xl pl-16 pb-0 pt-${openCompleteOrder ? 0 : 12} w-full flex justify-end`}
         onClick={()=>setOpenCompleteOrder(!openCompleteOrder)}>{openCompleteOrder ? "⇣ Close" : "⇡ Complete Order"}
         </Button>
           </div>
