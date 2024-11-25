@@ -29,7 +29,7 @@ import Icon, {
   MailOutlined,
   QuestionCircleOutlined,
 } from "@ant-design/icons";
-import { Card, Col, Row, Grid, Table, Avatar, Space, Button, Dropdown, Menu, Input, AutoComplete } from "antd";
+import { Card, Col, Row, Grid, Table, Avatar, Space, Button, Dropdown, Menu, Input, AutoComplete, Drawer, Select, Form, Divider } from "antd";
 
 const { useBreakpoint } = Grid;
 
@@ -317,6 +317,8 @@ export default function Dashboard() {
     );
   }
 
+
+
   return (
     <div style={{ padding: 20, height: "100%" }}>
       <Row gutter={16}>
@@ -380,23 +382,105 @@ const Toolbar = () => (
 );
 
 // Menu for more actions
-const MoreActionsMenu = ({ record }) => (
-  <Menu
-    onClick={({ key }) => {
-      message.info(`Action ${key} clicked for id: ${record.id}`);
-    }}
+function MoreActionsMenu({ record }) {
+  const [openSupportDrawer, setOpenSupportDrawer] = React.useState(false);
+
+  const { Option } = Select;
+const { TextArea } = Input;
+
+const onFinish = (values) => {
+  console.log('Form values:', values);
+  //message.success('Form submitted successfully!');
+};
+
+  return (
+  <div>
+  <Menu>
+      <Menu.Item key="action1">
+        <Button type="text" icon={<MailOutlined />}> Send Email to Manufacturer</Button>
+      </Menu.Item>
+      <Menu.Item key="action2">
+      <Button type="text" icon={<EditOutlined />}> Edit Order Items</Button>
+      </Menu.Item>
+      <Menu.Item key="action3">
+      <Button type="text" icon={<QuestionCircleOutlined />} onClick={() => setOpenSupportDrawer(true)}> Get Support</Button>
+      </Menu.Item>
+    </Menu>
+
+  <Drawer
+  title={<>Get Support <QuestionCircleOutlined className="ml-2 size-6" /></>}
+  placement={"right"}
+  onClose={() => setOpenSupportDrawer(false)}
+  visible={openSupportDrawer}
+  width={370}
+  className={"custom-drawer"}
   >
-    <Menu.Item key="action1">
-      <Button type="text" icon={<MailOutlined />}> Send Email to Manufacturer</Button>
-    </Menu.Item>
-    <Menu.Item key="action2">
-    <Button type="text" icon={<EditOutlined />}> Edit Order Items</Button>
-    </Menu.Item>
-    <Menu.Item key="action3">
-    <Button type="text" icon={<QuestionCircleOutlined />}> Get Support</Button>
-    </Menu.Item>
-  </Menu>
-);
+    <div className="h-[53vh] scroll">
+            <p className="text-gray-700">Here you can describe the support details or provide a form.</p>
+
+    </div>
+    <Divider />
+    <div className="">
+
+      <Form layout="vertical" onFinish={onFinish} className="">
+          <Form.Item
+            label="Priority"
+            name="priority"
+            rules={[{ required: true, message: 'Please select a priority!' }]}
+          >
+            <Select
+              placeholder="Select a priority"
+              options={[
+                { value: 'danger', label: '🟥 Danger' },
+                { value: 'warning', label: '🟧 Warning' },
+                { value: 'info', label: '🟦 Info' },
+                { value: 'success', label: '🟩 Success' },
+              ]}
+            />
+          </Form.Item>
+
+          <Form.Item
+            label="Admins"
+            name="admins"
+            rules={[{ required: true, message: 'Please select at least one admin!' }]}
+          >
+            <Select
+              mode="multiple"
+              placeholder="Select admins"
+            >
+              <Option value="admin1">Admin 1</Option>
+              <Option value="admin2">Admin 2</Option>
+              <Option value="admin3">Admin 3</Option>
+            </Select>
+          </Form.Item>
+
+          <Form.Item
+            label="Subject"
+            name="subject"
+          >
+            <TextArea rows={1} placeholder="Provide subject here..." />
+          </Form.Item>
+
+          <Form.Item
+            label="Note"
+            name="note"
+          >
+            <TextArea rows={3} placeholder="Provide additional notes..." />
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit">Submit</Button>
+          </Form.Item>
+        </Form>
+    </div>
+
+  {/* Drawer içerisine daha fazla içerik veya bir form ekleyebilirsiniz */}
+  </Drawer>
+  </div>
+)
+}
+
+
 
 
 
