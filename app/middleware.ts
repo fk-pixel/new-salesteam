@@ -2,16 +2,16 @@ import { authMiddleware, clerkMiddleware, createRouteMatcher } from "@clerk/next
 
 const isProtectedRoute = createRouteMatcher(['/dashboard(.*)', '/order(.*)', '/messages(.*)', '/profile(.*)'])
 
-// const authMiddleware = authMiddleware({
-//   publicRoutes: [
-//     '/sign-in(.*)',
-//     '/sign-up(.*)',
-//     '/dashboard(.*)',
-//     '/order(.*)',
-//     '/messages(.*)',
-//     '/profile(.*)',
-//   ],
-// });
+const authMiddleware = authMiddleware({
+  publicRoutes: [
+    '/sign-in(.*)',
+    '/sign-up(.*)',
+    // '/dashboard(.*)',
+    // '/order(.*)',
+    // '/messages(.*)',
+    // '/profile(.*)',
+  ],
+});
 
 export default clerkMiddleware(async (auth, req) => {
   if (isProtectedRoute(req)) await auth.protect()
