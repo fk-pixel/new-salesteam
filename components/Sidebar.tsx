@@ -8,13 +8,13 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 
-import imgLogo from "../public/T.png";
+import imgLogo from "../public/sales_team_hand.png";
 
 const Sidebar = ({ collapsed }) => {
   return (
     <div>
       <div className="flex flex-col justify-center items-center">
-        <Image src={imgLogo} width={200} height={200} />
+        <Image src={imgLogo} width={100} height={100} />
       </div>
       <Menu
         theme="light"
