@@ -1,8 +1,64 @@
 {
-  "extends": ["next/core-web-vitals","eslint:recommended", "prettier"],
+  "extends": [
+    "eslint:recommended",
+    "next/core-web-vitals",
+    "plugin:tailwindcss/recommended",
+    "plugin:prettier/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:@next/next/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "eslint-plugin-react", "tailwindcss"],
+  "parserOptions": {
+    "ecmaVersion": 9,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "root": true,
   "rules": {
-    "semi": ["error", "always"],
-    "comma-dangle": ["error", "always-multiline"],
-    "no-unused-vars": "warn"
+    "comma-dangle": [
+      "error",
+      {
+        "arrays": "always-multiline",
+        "objects": "always-multiline",
+        "imports": "always-multiline",
+        "exports": "always-multiline",
+        "functions": "always-multiline"
+      }
+    ],
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      {
+        "argsIgnorePattern": "^_|req|res|next|err|ctx|args|context|info"
+      }
+    ],
+    "@next/next/no-html-link-for-pages": ["error", "packages/new-salesteam/pages/"],
+    "tailwindcss/no-custom-classname": "off",
+    "no-console": "error",
+    "@typescript-eslint/explicit-function-return-type": "off"
+  },
+  "settings": {
+    "next": {
+      "rootDir": "./"
+    },
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true
+      }
+    },
+    "tailwindcss": {
+      "config": "./tailwind.config.ts"
+    }
   }
 }

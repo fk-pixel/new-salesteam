@@ -1,0 +1,3 @@
+scripts/**/*.js
+scripts/**/*.ts
+app/**/__generated
